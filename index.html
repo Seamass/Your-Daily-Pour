@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Daily Pour — Find Your Perfect Cup</title>
+  <meta name="description" content="Discover cafés that use the beans, milk, and brew styles you love. Rated and reviewed by real coffee people." />
+  <link rel="icon" type="image/png" href="logo.png" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6B3F1F;
+      --primary-light: #A0522D;
+      --accent: #C8860A;
+      --accent-light: #F5C842;
+      --bg: #FAF6F0;
+      --card: #FFFFFF;
+      --text: #1C1008;
+      --text-secondary: #6B6057;
+      --text-muted: #A89880;
+      --border: #E8DDD0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Playfair Display', serif;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(250, 246, 240, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 68px;
+    }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .nav-logo img { height: 44px; width: 44px; object-fit: contain; }
+
+    .nav-logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 800;
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex; gap: 28px; list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none; color: var(--text-secondary);
+      font-size: 0.9rem; font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--primary); }
+
+    .nav-cta {
+      background: var(--primary); color: #fff;
+      padding: 10px 22px; border-radius: 24px;
+      text-decoration: none; font-size: 0.9rem; font-weight: 600;
+      transition: background 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--primary-light); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 5% 80px;
+      background: linear-gradient(160deg, #FAF6F0 0%, #F0E8DC 100%);
+      position: relative; overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(200,134,10,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse at 30% 60%, rgba(107,63,31,0.06) 0%, transparent 60%);
+    }
+
+    .hero-inner { position: relative; max-width: 720px; }
+
+    .hero-logo {
+      width: 460px; height: 460px;
+      object-fit: contain;
+      margin-bottom: 24px;
+      filter: drop-shadow(0 8px 24px rgba(107,63,31,0.15));
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.15;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: var(--text-secondary);
+      max-width: 520px;
+      margin: 0 auto 40px;
+      line-height: 1.7;
+    }
+
+    .hero-buttons {
+      display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--primary); color: #fff;
+      padding: 16px 32px; border-radius: 50px;
+      text-decoration: none; font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; gap: 10px;
+      transition: all 0.2s;
+      box-shadow: 0 4px 20px rgba(107,63,31,0.25);
+    }
+
+    .btn-primary:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 28px rgba(107,63,31,0.3);
+    }
+
+    .btn-secondary {
+      background: var(--card); color: var(--primary);
+      padding: 16px 32px; border-radius: 50px;
+      text-decoration: none; font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; gap: 10px;
+      border: 2px solid var(--primary);
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary); color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .btn-coming-soon {
+      background: var(--border); color: var(--text-muted);
+      padding: 16px 32px; border-radius: 50px;
+      font-weight: 700; font-size: 1rem;
+      display: flex; align-items: center; gap: 10px;
+      cursor: default;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 100px 5%; }
+
+    .section-label {
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--primary);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem; color: var(--text-secondary);
+      max-width: 600px; line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    .about {
+      background: var(--card);
+      display: flex; gap: 80px; align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .about-text { flex: 1; min-width: 280px; }
+
+    .about-text p {
+      color: var(--text-secondary);
+      font-size: 1.05rem; line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .about-image {
+      flex: 1; min-width: 280px;
+      display: flex; justify-content: center;
+    }
+
+    .about-mockup {
+      width: 420px; height: 340px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .coffee-illustration {
+      position: relative;
+      width: 320px; height: 320px;
+    }
+
+    /* Plate */
+    .coffee-illustration .plate {
+      position: absolute;
+      bottom: 40px; left: 50%; transform: translateX(-50%);
+      width: 180px; height: 18px;
+      background: linear-gradient(180deg, #E8DDD0, #D4C4B0);
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(107,63,31,0.2);
+    }
+
+    /* Cup body */
+    .coffee-illustration .cup {
+      position: absolute;
+      bottom: 52px; left: 50%; transform: translateX(-50%);
+      width: 120px; height: 110px;
+      background: linear-gradient(160deg, #8B5A2B 0%, #6B3F1F 60%, #4A2810 100%);
+      border-radius: 8px 8px 28px 28px;
+      box-shadow: 0 8px 30px rgba(107,63,31,0.35), inset 2px 0 8px rgba(255,255,255,0.08);
+    }
+
+    /* Cup shine */
+    .coffee-illustration .cup::before {
+      content: '';
+      position: absolute;
+      top: 10px; left: 10px;
+      width: 18px; height: 50px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      transform: rotate(-8deg);
+    }
+
+    /* Handle */
+    .coffee-illustration .handle {
+      position: absolute;
+      bottom: 90px; right: 74px;
+      width: 30px; height: 44px;
+      border: 10px solid #6B3F1F;
+      border-left: none;
+      border-radius: 0 24px 24px 0;
+      box-shadow: 4px 0 8px rgba(107,63,31,0.2);
+    }
+
+    /* Coffee surface inside cup */
+    .coffee-illustration .coffee-surface {
+      position: absolute;
+      top: 6px; left: 50%; transform: translateX(-50%);
+      width: 100px; height: 100px;
+      background: radial-gradient(ellipse at 40% 35%, #D4956A 0%, #A0522D 40%, #7B3A18 100%);
+      border-radius: 50%;
+    }
+
+    /* Latte art heart */
+    .coffee-illustration .latte-art {
+      position: absolute;
+      top: 22px; left: 50%; transform: translateX(-50%);
+      width: 60px; height: 54px;
+    }
+
+    .coffee-illustration .heart-left,
+    .coffee-illustration .heart-right {
+      position: absolute;
+      width: 28px; height: 28px;
+      background: rgba(245, 200, 150, 0.7);
+      border-radius: 50%;
+      top: 0;
+    }
+
+    .coffee-illustration .heart-left { left: 2px; }
+    .coffee-illustration .heart-right { right: 2px; }
+
+    .coffee-illustration .heart-bottom {
+      position: absolute;
+      bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg);
+      width: 36px; height: 36px;
+      background: rgba(245, 200, 150, 0.7);
+    }
+
+    /* Steam lines */
+    .coffee-illustration .steam {
+      position: absolute;
+      bottom: 160px; left: 50%; transform: translateX(-50%);
+      display: flex; gap: 14px;
+    }
+
+    .coffee-illustration .steam-line {
+      width: 5px; height: 50px;
+      background: linear-gradient(180deg, transparent, rgba(200,134,10,0.3), rgba(200,134,10,0.15), transparent);
+      border-radius: 10px;
+      animation: steam 2.5s ease-in-out infinite;
+    }
+
+    .coffee-illustration .steam-line:nth-child(2) { animation-delay: 0.4s; height: 65px; }
+    .coffee-illustration .steam-line:nth-child(3) { animation-delay: 0.8s; }
+
+    @keyframes steam {
+      0%, 100% { transform: scaleX(1) translateY(0); opacity: 0.4; }
+      50% { transform: scaleX(1.4) translateY(-8px); opacity: 0.8; }
+    }
+
+    /* Coffee beans decoration */
+    .coffee-illustration .bean {
+      position: absolute;
+      width: 22px; height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.15);
+    }
+
+    .coffee-illustration .bean::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%, -50%);
+      width: 70%; height: 2px;
+      background: rgba(0,0,0,0.2);
+      border-radius: 2px;
+    }
+
+    .coffee-illustration .bean-1 { top: 30px; left: 20px; transform: rotate(-20deg); }
+    .coffee-illustration .bean-2 { top: 60px; right: 18px; transform: rotate(30deg); background: var(--primary-light); }
+    .coffee-illustration .bean-3 { bottom: 100px; left: 14px; transform: rotate(15deg); background: #8B5A2B; }
+    .coffee-illustration .bean-4 { top: 10px; right: 50px; transform: rotate(-35deg); background: var(--primary-light); }
+
+    /* Sparkles */
+    .coffee-illustration .sparkle {
+      position: absolute;
+      color: var(--accent);
+      font-size: 1.2rem;
+      animation: twinkle 3s ease-in-out infinite;
+    }
+
+    .coffee-illustration .sparkle:nth-child(2) { animation-delay: 1s; }
+    .coffee-illustration .sparkle:nth-child(3) { animation-delay: 2s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.3; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    .coffee-illustration .sp-1 { top: 20px; left: 60px; }
+    .coffee-illustration .sp-2 { top: 80px; right: 24px; }
+    .coffee-illustration .sp-3 { bottom: 130px; right: 50px; }
+
+    /* ── HOW IT WORKS ── */
+    .how-it-works {
+      background: linear-gradient(160deg, #FAF6F0 0%, #F0E8DC 100%);
+      text-align: center;
+    }
+
+    .how-it-works .section-subtitle { margin: 0 auto 60px; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      max-width: 960px; margin: 0 auto;
+    }
+
+    .step {
+      background: var(--card);
+      border-radius: 20px;
+      padding: 36px 28px;
+      text-align: center;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .step:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(107,63,31,0.1);
+    }
+
+    .step-icon {
+      font-size: 2.5rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .step-num {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      font-size: 0.8rem; font-weight: 700;
+      line-height: 28px; text-align: center;
+      margin-bottom: 12px;
+    }
+
+    .step h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .step p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── FEATURES ── */
+    .features { background: var(--card); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+      margin-top: 60px;
+    }
+
+    .feature-card {
+      background: var(--bg);
+      border-radius: 16px;
+      padding: 28px;
+      border: 1px solid var(--border);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(107,63,31,0.08);
+    }
+
+    .feature-icon { font-size: 2rem; margin-bottom: 14px; display: block; }
+
+    .feature-card h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .feature-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.6; }
+
+    /* ── SUBMIT ── */
+    .submit-section {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      text-align: center;
+      color: #fff;
+    }
+
+    .submit-section .section-label { color: var(--accent-light); }
+    .submit-section .section-title { color: #fff; margin: 0 auto 20px; max-width: 560px; }
+    .submit-section .section-subtitle { color: rgba(255,255,255,0.8); margin: 0 auto 40px; }
+
+    .submit-section .btn-primary {
+      background: #fff; color: var(--primary);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+
+    .submit-section .btn-primary:hover {
+      background: var(--bg);
+    }
+
+    /* ── PRIVACY & TERMS ── */
+    .legal-section {
+      background: var(--card);
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 80px 5%;
+    }
+
+    .legal-section h2 {
+      font-size: 2rem; color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .legal-section .updated {
+      font-size: 0.85rem; color: var(--text-muted);
+      margin-bottom: 40px;
+    }
+
+    .legal-section h3 {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem; font-weight: 700;
+      color: var(--primary);
+      margin: 32px 0 10px;
+    }
+
+    .legal-section p, .legal-section li {
+      font-size: 0.95rem; color: var(--text-secondary);
+      line-height: 1.8; margin-bottom: 10px;
+    }
+
+    .legal-section ul {
+      padding-left: 20px; margin-bottom: 10px;
+    }
+
+    .legal-divider {
+      border: none; border-top: 1px solid var(--border);
+      margin: 60px 0;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--text);
+      color: rgba(255,255,255,0.7);
+      padding: 48px 5%;
+      text-align: center;
+    }
+
+    .footer-logo {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .footer-logo img { height: 40px; width: 40px; object-fit: contain; }
+
+    .footer-logo span {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem; font-weight: 800; color: #fff;
+    }
+
+    .footer-links {
+      display: flex; gap: 28px; justify-content: center;
+      list-style: none; margin-bottom: 24px; flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: rgba(255,255,255,0.6);
+      text-decoration: none; font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: #fff; }
+
+    .footer-copy {
+      font-size: 0.85rem; color: rgba(255,255,255,0.4);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 4%; }
+      .nav-links { display: none; }
+      .hero { padding: 100px 6% 60px; }
+      .hero-logo { width: 140px; height: 140px; }
+      section { padding: 70px 6%; }
+      .about { gap: 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">
+      <img src="logo.png" alt="Your Daily Pour" />
+      <span>Your Daily Pour</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#privacy">Privacy</a></li>
+      <li><a href="#terms">Terms</a></li>
+    </ul>
+    <a class="nav-cta" href="#download">Download</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="download">
+    <div class="hero-inner">
+      <img src="logo.png" alt="Your Daily Pour" class="hero-logo" />
+      <h1>Find your <em>perfect</em> cup.</h1>
+      <p>Discover cafés that use the beans, milk, and brew styles you love — rated and reviewed by real coffee people.</p>
+      <div class="hero-buttons">
+        <span class="btn-coming-soon">
+          🍎 App Store — Coming Soon
+        </span>
+        <span class="btn-coming-soon">
+          🤖 Google Play — Coming Soon
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <div class="about-text">
+      <p class="section-label">About</p>
+      <h2 class="section-title">More than just a café finder.</h2>
+      <p>Your Daily Pour is built for people who take their coffee seriously. Not just where to get a flat white — but <em>who</em> is roasting the beans, <em>which</em> milk brands they use, and whether the experience matches the cup.</p>
+      <p>Browse nearby cafés filtered to your exact taste. Discover places that use your favourite roaster, stock your preferred milk brand, and serve the brew style you love. Read honest reviews from people who care as much about coffee as you do.</p>
+      <p>Found a great café we don't have yet? Submit it. We review every listing before it goes live — so you can trust what you find.</p>
+    </div>
+    <div class="about-image">
+      <div class="about-mockup">
+        <img src="Cafe.png" alt="A beautiful café" style="width:100%; height:100%; object-fit:cover; border-radius:24px; box-shadow: 0 20px 60px rgba(107,63,31,0.25);" />
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how-it-works" id="how-it-works">
+    <p class="section-label">How It Works</p>
+    <h2 class="section-title">Your coffee. Your way.</h2>
+    <p class="section-subtitle">Four simple steps to finding your perfect cup every time.</p>
+    <div class="steps">
+      <div class="step">
+        <span class="step-num">1</span>
+        <h3>Discover</h3>
+        <p>Search cafés by bean brand, milk type, brew style, and amenities. Filter by what matters to you.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">2</span>
+        <h3>Explore Nearby</h3>
+        <p>See cafés close to you that match your taste preferences — with distance, ratings, and opening hours.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">3</span>
+        <h3>Review & Share</h3>
+        <p>Rate the coffee and the experience separately. Add photos and help other coffee lovers find their perfect cup.</p>
+      </div>
+      <div class="step">
+        <span class="step-num">4</span>
+        <h3>Follow & Connect</h3>
+        <p>Follow people with similar taste. See what they're rating and where they're going.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features" id="features">
+    <p class="section-label">Features</p>
+    <h2 class="section-title">Everything a coffee lover needs.</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">☕</span>
+        <h3>Bean Brands</h3>
+        <p>See exactly which roaster each café uses — not just "single origin", the actual roaster.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🥛</span>
+        <h3>Milk Options & Brands</h3>
+        <p>Filter by milk type and the specific brand used. Oat milk is great — Oatly oat milk is better.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⭐</span>
+        <h3>Dual Ratings</h3>
+        <p>Separate scores for coffee quality and overall experience — because both matter.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📍</span>
+        <h3>Nearby</h3>
+        <p>Location-based discovery filtered to your saved taste preferences. Your perfect cup, close to you.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">📸</span>
+        <h3>Photos</h3>
+        <p>Real photos from real visits. See what you're getting before you walk in the door.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🕐</span>
+        <h3>Opening Hours</h3>
+        <p>Full weekly hours for every café so you never turn up to a closed door.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">👥</span>
+        <h3>Social</h3>
+        <p>Follow people with similar taste, like reviews, and build your own coffee community.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">✅</span>
+        <h3>Verified Listings</h3>
+        <p>Every café is reviewed by our team before going live. No spam, no duplicates.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUBMIT A CAFÉ -->
+  <section class="submit-section">
+    <p class="section-label">Community</p>
+    <h2 class="section-title">Know a great café we're missing?</h2>
+    <p class="section-subtitle">Your Daily Pour grows through its community. Submit a café through the app — include the beans, milk brands, brew styles, and hours — and we'll review and approve it, usually within 24 hours.</p>
+    <div style="display:flex; justify-content:center;">
+      <a href="#download" class="btn-primary">Download the App</a>
+    </div>
+  </section>
+
+  <!-- PRIVACY POLICY -->
+  <div id="privacy">
+    <div class="legal-section">
+      <h2>Privacy Policy</h2>
+      <p class="updated">Last updated: June 2026</p>
+
+      <h3>Who We Are</h3>
+      <p>Your Daily Pour ("we", "us", "our") operates the Your Daily Pour mobile application. We are based in New Zealand. For privacy-related questions, contact us at: <a href="mailto:yourdailypour2026@gmail.com" style="color:var(--primary);">yourdailypour2026@gmail.com</a></p>
+
+      <h3>What Information We Collect</h3>
+      <p><strong>Information you provide:</strong></p>
+      <ul>
+        <li>Name and email address when you register</li>
+        <li>Profile photo and bio if you choose to add them</li>
+        <li>Café submissions including name, address, photos, and details</li>
+        <li>Reviews, ratings, comments, and photos you post</li>
+      </ul>
+      <p><strong>Information collected automatically:</strong></p>
+      <ul>
+        <li>Your device location (only when you use the Nearby feature, and only with your permission)</li>
+        <li>App usage data for improving the service</li>
+      </ul>
+
+      <h3>How We Use Your Information</h3>
+      <ul>
+        <li>To operate your account and provide the app's features</li>
+        <li>To show nearby cafés based on your location</li>
+        <li>To display your reviews and profile to other users</li>
+        <li>To review and approve café submissions</li>
+        <li>To improve the app</li>
+      </ul>
+
+      <h3>How We Store Your Information</h3>
+      <p>Your data is stored securely using Google Firebase, hosted on Google Cloud infrastructure. Firebase complies with international data protection standards. We do not sell your personal information to third parties.</p>
+
+      <h3>Location Data</h3>
+      <p>Location is only accessed when you use the Nearby feature. We do not track or store your location history. You can deny location permission at any time in your device settings — the app will still work, but the Nearby feature will be unavailable.</p>
+
+      <h3>Photos</h3>
+      <p>Photos you upload are stored securely on Google Firebase Storage. By uploading a photo you confirm you have the right to share it.</p>
+
+      <h3>User-Generated Content</h3>
+      <p>Reviews, ratings, and café information you submit may be visible to all users of the app. Do not post content you do not want to be publicly visible.</p>
+
+      <h3>Your Rights (New Zealand Privacy Act 2020)</h3>
+      <p>You have the right to access, correct, or request deletion of your personal information. To exercise these rights, email us at <a href="mailto:yourdailypour2026@gmail.com" style="color:var(--primary);">yourdailypour2026@gmail.com</a></p>
+
+      <h3>Children</h3>
+      <p>Your Daily Pour is not intended for use by children under 13. We do not knowingly collect information from children under 13.</p>
+
+      <h3>Changes to This Policy</h3>
+      <p>We may update this policy from time to time. We will notify users of significant changes through the app.</p>
+    </div>
+  </div>
+
+  <!-- TERMS -->
+  <div id="terms" style="background: var(--bg);">
+    <div class="legal-section" style="background: var(--bg);">
+      <hr class="legal-divider" />
+      <h2>Terms &amp; Conditions</h2>
+      <p class="updated">Last updated: June 2026</p>
+
+      <h3>1. Acceptance of Terms</h3>
+      <p>By downloading or using Your Daily Pour ("the app"), you agree to these Terms &amp; Conditions. If you do not agree, do not use the app.</p>
+
+      <h3>2. Your Account</h3>
+      <ul>
+        <li>You must provide accurate information when registering</li>
+        <li>You are responsible for keeping your password secure</li>
+        <li>You must be at least 13 years old to create an account</li>
+        <li>One person, one account — you may not create multiple accounts</li>
+      </ul>
+
+      <h3>3. Café Submissions</h3>
+      <ul>
+        <li>All submissions are reviewed and approved before going live</li>
+        <li>We reserve the right to reject, edit, or remove any café listing at our discretion</li>
+        <li>By submitting a café you confirm the information is accurate to the best of your knowledge</li>
+      </ul>
+
+      <h3>4. Reviews &amp; Content</h3>
+      <ul>
+        <li>Reviews must be honest and based on genuine experiences</li>
+        <li>You may not post false, defamatory, or misleading content</li>
+        <li>You may not post content that is offensive, illegal, or harassing</li>
+        <li>We reserve the right to remove any content that violates these terms</li>
+        <li>By posting content you grant Your Daily Pour a licence to display that content within the app</li>
+      </ul>
+
+      <h3>5. Photos</h3>
+      <ul>
+        <li>Only upload photos you own or have the right to share</li>
+        <li>Do not upload photos of people without their consent</li>
+        <li>We reserve the right to remove any photo at our discretion</li>
+      </ul>
+
+      <h3>6. Prohibited Conduct</h3>
+      <p>You may not use the app for any unlawful purpose, attempt to access other users' accounts, post spam or promotional content, attempt to reverse engineer the app, or create fake cafés or reviews.</p>
+
+      <h3>7. Intellectual Property</h3>
+      <p>The Your Daily Pour name, logo, and app design are our intellectual property. User-submitted content remains owned by the user who submitted it.</p>
+
+      <h3>8. Disclaimer</h3>
+      <p>The app is provided "as is". Café information is submitted by users and while we review submissions, we cannot guarantee the accuracy of all details including opening hours, menu items, or facilities.</p>
+
+      <h3>9. Limitation of Liability</h3>
+      <p>To the extent permitted by New Zealand law, Your Daily Pour is not liable for any loss or damage arising from your use of the app or reliance on content within it.</p>
+
+      <h3>10. Governing Law</h3>
+      <p>These terms are governed by the laws of New Zealand. Any disputes will be subject to the jurisdiction of the New Zealand courts.</p>
+
+      <h3>11. Contact</h3>
+      <p>For any questions: <a href="mailto:yourdailypour2026@gmail.com" style="color:var(--primary);">yourdailypour2026@gmail.com</a></p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">
+      <img src="logo.png" alt="Your Daily Pour" />
+      <span>Your Daily Pour</span>
+    </div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#how-it-works">How It Works</a></li>
+      <li><a href="#features">Features</a></li>
+      <li><a href="#privacy">Privacy Policy</a></li>
+      <li><a href="#terms">Terms &amp; Conditions</a></li>
+      <li><a href="mailto:yourdailypour2026@gmail.com">Contact</a></li>
+    </ul>
+    <p class="footer-copy">© 2026 Your Daily Pour. Made for coffee lovers, by coffee lovers. 🇳🇿</p>
+  </footer>
+
+</body>
+</html>
